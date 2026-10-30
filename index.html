@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORM — Официальный сайт & Лаунчер</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        worm: {
+                            bg: '#0d0f17',
+                            card: '#161926',
+                            sidebar: '#121420',
+                            border: '#25293c',
+                            accent: '#7c5cff',
+                            accentHover: '#6a42ff',
+                            accentGlow: 'rgba(124, 92, 255, 0.25)',
+                            textMuted: '#8f95b2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0f17;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        .purple-glow {
+            box-shadow: 0 0 35px 0 rgba(124, 92, 255, 0.35);
+        }
+
+        .purple-glow-hover:hover {
+            box-shadow: 0 0 45px 5px rgba(124, 92, 255, 0.5);
+        }
+
+        .glass-card {
+            background: rgba(22, 25, 38, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(124, 92, 255, 0.12) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0f17;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #25293c;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7c5cff;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative bg-grid-pattern selection:bg-worm-accent selection:text-white">
+
+    <!-- Glowing background accents -->
+    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-worm-accent/15 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="fixed bottom-10 right-10 w-[350px] h-[350px] bg-purple-900/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <!-- Header Navigation -->
+    <header class="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between relative z-10">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-worm-accent flex items-center justify-center font-extrabold text-xl text-white shadow-lg shadow-worm-accent/40">
+                W
+            </div>
+            <span class="text-2xl font-black tracking-wider text-white">WORM</span>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-8 font-medium text-worm-textMuted">
+            <a href="#features" class="hover:text-white transition-colors">Особенности</a>
+            <a href="#news" class="hover:text-white transition-colors">Новости</a>
+            <a href="#status" class="hover:text-white transition-colors flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Статус
+            </a>
+        </nav>
+
+        <div>
+            <button onclick="triggerDownload()" class="bg-worm-accent hover:bg-worm-accentHover text-white px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 shadow-lg shadow-worm-accent/20">
+                <i class="fa-solid fa-download"></i>
+                <span>Скачать</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Hero Section -->
+    <main class="w-full max-w-6xl mx-auto px-6 pt-12 pb-20 relative z-10 flex-grow flex flex-col justify-center items-center text-center">
+        
+        <!-- Status Pill -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-semibold text-worm-textMuted mb-8 border border-white/5">
+            <span class="flex h-2 w-2 relative">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span>WormLauncher v1.0.0 доступен для Windows</span>
+        </div>
+
+        <!-- Big Title -->
+        <h1 class="text-5xl md:text-7xl font-black text-white tracking-tight mb-6 leading-tight max-w-4xl">
+            Каждый большой путь начинается с <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-worm-accent to-indigo-300">одного шага.</span>
+        </h1>
+
+        <p class="text-lg md:text-xl text-worm-textMuted max-w-2xl mb-10 leading-relaxed font-normal">
+            Минималистичный, быстрый и кастомизируемый лаунчер нового поколения. Никакой рекламы и лишнего мусора — только твои любимые игры и удобные стикеры.
+        </p>
+
+        <!-- DOWNLOAD ACTION BOX -->
+        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-16">
+            <button onclick="triggerDownload()" class="w-full sm:w-auto bg-worm-accent hover:bg-worm-accentHover text-white px-10 py-5 rounded-2xl text-xl font-bold transition-all duration-300 flex items-center justify-center gap-4 purple-glow purple-glow-hover transform hover:-translate-y-1">
+                <i class="fa-solid fa-download text-2xl"></i>
+                <div class="text-left">
+                    <div class="leading-none">Скачать WormLauncher</div>
+                    <div class="text-xs font-normal opacity-80 mt-1">Windows x64 (.exe) • 25 MB</div>
+                </div>
+            </button>
+
+            <button onclick="downloadZip()" class="w-full sm:w-auto glass-card hover:bg-white/10 text-white px-6 py-5 rounded-2xl text-base font-semibold transition-all duration-300 border border-white/10 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-file-zipper text-worm-textMuted"></i>
+                <span>ZIP Архив</span>
+            </button>
+        </div>
+
+        <!-- Features Grid -->
+        <section id="features" class="w-full grid md:grid-cols-3 gap-6 text-left my-12">
+            <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-worm-accent/30 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-worm-accent/20 text-worm-accent flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-palette"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Кастомизация</h3>
+                <p class="text-sm text-worm-textMuted leading-relaxed">
+                    Полная настройка интерфейса: RGB-акценты, темы (светлая, тёмная, чёрная, синяя) и перетаскиваемые интерактивные стикеры.
+                </p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-worm-accent/30 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Автономный & Быстрый</h3>
+                <p class="text-sm text-worm-textMuted leading-relaxed">
+                    Собран на современном .NET 8 без тяжелых зависимостей. Запускается за доли секунды и потребляет минимум ресурсов ПК.
+                </p>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-worm-accent/30 transition-all">
+                <div class="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Поддержка Godot</h3>
+                <p class="text-sm text-worm-textMuted leading-relaxed">
+                    Прямая интеграция с кастомным движком игры. Автоматическое обновление билдов и файлов данных без ручной установки.
+                </p>
+            </div>
+        </section>
+
+        <!-- News / Status Feed Section -->
+        <section id="news" class="w-full my-8 text-left">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                    <i class="fa-solid fa-newspaper text-worm-accent"></i>
+                    Последние новости
+                </h2>
+                <span class="text-xs text-worm-textMuted">Синхронизируется с лаунчером</span>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6" id="newsContainer">
+                <div class="glass-card p-6 rounded-2xl border border-white/5">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="px-2.5 py-1 rounded-md bg-worm-accent/20 text-worm-accent text-xs font-semibold">Релиз</span>
+                        <span class="text-xs text-worm-textMuted">30 Октября 2026</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-2">Официальный релиз WormLauncher v1.0.0</h4>
+                    <p class="text-sm text-worm-textMuted leading-relaxed">
+                        Мы рады представить первою версию лаунчера! Добавлены гибкие настройки стикеров, выбор выделяемой ОЗУ, кастомные цвета темы и менеджер аккаунтов.
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl border border-white/5">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-400 text-xs font-semibold">Разработка</span>
+                        <span class="text-xs text-worm-textMuted">Скоро</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-2">Подготовка игры на Godot Engine</h4>
+                    <p class="text-sm text-worm-textMuted leading-relaxed">
+                        Идет активная работа над первым билдом игры. После завершения тест-сборки файл будет автоматически доступен для загрузки через кнопку «Играть».
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full border-t border-white/5 bg-worm-sidebar/80 py-8 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-worm-textMuted">
+            <div>
+                © 2026 WORM Project. Все права защищены.
+            </div>
+
+            <div class="flex items-center gap-6">
+                <span>Версия сайта: 1.0.0</span>
+                <span>•</span>
+                <!-- Secret Developer Trigger Key -->
+                <button onclick="openDevModal()" title="Скрытая зона разработчика" class="hover:text-worm-accent transition-colors opacity-40 hover:opacity-100">
+                    <i class="fa-solid fa-key text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dev / Admin Modal (Hidden by default) -->
+    <div id="devModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-md rounded-3xl p-6 border border-white/10 relative shadow-2xl">
+            <!-- Close Button -->
+            <button onclick="closeDevModal()" class="absolute top-5 right-5 text-worm-textMuted hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Step 1: Login Form -->
+            <div id="devAuthStep">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Зона разработчика</h3>
+                        <p class="text-xs text-worm-textMuted">Управление билдами игры Godot</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 my-6">
+                    <div>
+                        <label class="block text-xs font-semibold text-worm-textMuted mb-2">Введите пароль доступа:</label>
+                        <input type="password" id="devPassword" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl bg-worm-bg border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-worm-accent">
+                    </div>
+                    <p id="devAuthError" class="text-xs text-red-400 hidden">Неверный пароль доступа!</p>
+                </div>
+
+                <button onclick="authenticateDev()" class="w-full bg-worm-accent hover:bg-worm-accentHover text-white py-3 rounded-xl font-semibold transition-all">
+                    Войти в систему
+                </button>
+            </div>
+
+            <!-- Step 2: Game Build Management (Shown after login) -->
+            <div id="devDashboardStep" class="hidden">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Хранилище билдов Godot</h3>
+                        <p class="text-xs text-emerald-400">Авторизация успешна</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-xs">
+                    <div class="p-3 rounded-xl bg-worm-bg/80 border border-white/5 space-y-2">
+                        <div class="font-semibold text-white">Текущий активный билд игры:</div>
+                        <div class="text-worm-textMuted flex justify-between items-center">
+                            <span>Файл: <strong id="currentBuildName" class="text-white">не загружен</strong></span>
+                            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px]">Ожидание</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-worm-textMuted mb-1">Прямая ссылка на файл игры (.pck / .zip / .exe):</label>
+                        <input type="text" id="gameUrlInput" placeholder="https://example.com/builds/game.pck" class="w-full px-3 py-2 rounded-lg bg-worm-bg border border-white/10 text-white text-xs focus:outline-none focus:border-worm-accent">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-worm-textMuted mb-1">Версия билда:</label>
+                        <input type="text" id="gameVersionInput" placeholder="v0.1.0-dev" class="w-full px-3 py-2 rounded-lg bg-worm-bg border border-white/10 text-white text-xs focus:outline-none focus:border-worm-accent">
+                    </div>
+
+                    <button onclick="saveBuildInfo()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-xl font-semibold transition-all mt-2">
+                        Сохранить билд для лаунчера
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast Container -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- Page Logic Script -->
+    <script>
+        // Trigger Download of the Launcher
+        function triggerDownload() {
+            showToast("Скачивание WormLauncher началось!", "success");
+            
+            // Create temporary link element for direct download
+            const a = document.createElement('a');
+            a.href = 'https://github.com/dmitrik882-bit/wormLaucher/releases/download/v1.0.0/wormlaucher.zip'; // Default file target
+            a.download = 'WormLauncher.zip';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function downloadZip() {
+            showToast("Скачивание ZIP архива...", "info");
+            const a = document.createElement('a');
+            a.href = 'https://github.com/dmitrik882-bit/wormLaucher/releases/download/v1.0.0/wormlaucher.zip';
+            a.download = 'WormLauncher.zip';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Developer Secret Portal Logic
+        function openDevModal() {
+            document.getElementById('devModal').classList.remove('hidden');
+        }
+
+        function closeDevModal() {
+            document.getElementById('devModal').classList.add('hidden');
+            document.getElementById('devAuthError').classList.add('hidden');
+        }
+
+        function authenticateDev() {
+            const pass = document.getElementById('devPassword').value;
+            // Secret passcode check (Default: 1234)
+            if (pass === '1234' || pass === 'wormdev') {
+                document.getElementById('devAuthStep').classList.add('hidden');
+                document.getElementById('devDashboardStep').classList.remove('hidden');
+                
+                // Load existing build if saved in localStorage
+                const savedBuild = localStorage.getItem('worm_game_build');
+                if (savedBuild) {
+                    const data = JSON.parse(savedBuild);
+                    document.getElementById('currentBuildName').innerText = data.version || 'v0.1.0';
+                    document.getElementById('gameUrlInput').value = data.url || '';
+                    document.getElementById('gameVersionInput').value = data.version || '';
+                }
+            } else {
+                document.getElementById('devAuthError').classList.remove('hidden');
+            }
+        }
+
+        function saveBuildInfo() {
+            const url = document.getElementById('gameUrlInput').value;
+            const version = document.getElementById('gameVersionInput').value;
+
+            if (!url) {
+                showToast("Укажите ссылку на файл игры!", "error");
+                return;
+            }
+
+            const buildData = { url, version, date: new Date().toISOString() };
+            localStorage.setItem('worm_game_build', JSON.stringify(buildData));
+
+            document.getElementById('currentBuildName').innerText = version || 'Загружен';
+            showToast("Данные игры сохранены! Лаунчер сможет видеть этот файл.", "success");
+        }
+
+        // Custom Notification System
+        function showToast(message, type = "info") {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            let bgClass = "bg-worm-card border-worm-accent text-white";
+            if (type === "success") bgClass = "bg-emerald-950/90 border-emerald-500 text-emerald-200";
+            if (type === "error") bgClass = "bg-rose-950/90 border-rose-500 text-rose-200";
+
+            toast.className = `glass-card border-l-4 p-4 rounded-xl shadow-xl text-sm flex items-center gap-3 transition-all duration-300 transform translate-y-2 opacity-0 ${bgClass}`;
+            toast.innerHTML = `
+                <i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-info'}"></i>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
